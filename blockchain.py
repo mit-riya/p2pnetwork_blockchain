@@ -13,8 +13,8 @@ sys.path.insert(0, '..') # Import the files where the modules are located
 
 from MyOwnPeer2PeerNode import MyOwnPeer2PeerNode
 from constants import *
-node_1 = MyOwnPeer2PeerNode("10.150.34.237", 8001, 1 ,  [Block.create_genesis_block(), Block(1), Block(2)])
-# node_1 = MyOwnPeer2PeerNode("10.150.34.237", 8002, 2)
+# node_1 = MyOwnPeer2PeerNode("10.150.34.237", 8001, 2 ,  [Block.create_genesis_block(), Block(1), Block(2)])
+node_1 = MyOwnPeer2PeerNode("10.150.34.237", 8003 ,3)
 # node_3 = MyOwnPeer2PeerNode("10.20.1.105", 8003, 3)
 
 # time.sleep(1)

@@ -89,8 +89,6 @@ class Node(threading.Thread):
         # Debugging on or off!
         self.debug = False
 
-    @property
-
     def receive_chain(self, chain_string):
         # Parse the chain string and create block objects
         blocks_data = chain_string.strip().split('\n')
@@ -422,7 +420,7 @@ class Node(threading.Thread):
         print("Message Structure ends")
         
         if int(type) == BLOCKCHAIN: 
-            self.receive_chain(chain_string = messagebody)
+            self.receive_chain(messagebody)
             self.display_chain()
         elif int(type) == TRANSACTION:
             self.receive_data(messagebody,type)
@@ -437,7 +435,8 @@ class Node(threading.Thread):
             print("Press 5 to accept the request")
         else:
             print("Invalid message type")
-        if isBroadcast:
+            
+        if isBroadcast == "True":
             if message_id not in self.broadcasted_messages:
                 self.broadcasted_messages.add(message_id)
                 self.send_to_nodes(data, exclude=[node])
