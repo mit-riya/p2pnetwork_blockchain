@@ -34,7 +34,7 @@ class Node(threading.Thread):
                  connected_node: Which connected node caused the event.
                  data: The data that is send by the connected node."""
 
-    def __init__(self, host, port, id=None, chain=[],transactionpool = [], callback=None, max_connections=5):
+    def __init__(self, host, port, id=None , callback=None, max_connections=5):
         """Create instance of a Node. If you want to implement the Node functionality with a callback, you should 
            provide a callback method. It is preferred to implement a new node by extending this Node class. 
             host: The host name or ip address that is used to bind the TCP/IP server to.
@@ -44,9 +44,9 @@ class Node(threading.Thread):
             max_connections: (optional) limiting the maximum nodes that are able to connect to this node."""
         super(Node, self).__init__()
 
-        self.chain = chain 
-        self.transactionpool = transactionpool
-        self.broadcasted_messages = set()  # Create an empty set
+        # self.chain = chain 
+        # self.transactionpool = transactionpool
+        # self.broadcasted_messages = set()  # Create an empty set
         # When this flag is set, the node will stop and close
 
         self.terminate_flag = threading.Event()
@@ -89,38 +89,38 @@ class Node(threading.Thread):
         # Debugging on or off!
         self.debug = False
 
-    def receive_chain(self, chain_string):
-        # Parse the chain string and create block objects
-        blocks_data = chain_string.strip().split('\n')
-        self.chain = []
-        for block_data in blocks_data:
-            index = int(block_data.split('#')[1].strip())
-            block = Block(index)
-            self.chain.append(block)
+    # def receive_chain(self, chain_string):
+    #     # Parse the chain string and create block objects
+    #     blocks_data = chain_string.strip().split('\n')
+    #     self.chain = []
+    #     for block_data in blocks_data:
+    #         index = int(block_data.split('#')[1].strip())
+    #         block = Block(index)
+    #         self.chain.append(block)
 
-    def display_chain(self):
-        for block in self.chain:
-            print(block)
+    # def display_chain(self):
+    #     for block in self.chain:
+    #         print(block)
 
-    def get_chain_string(self):
-        chain_string = ""
-        for block in self.chain:
-            chain_string += str(block) + "\n"
-        return chain_string
+    # def get_chain_string(self):
+    #     chain_string = ""
+    #     for block in self.chain:
+    #         chain_string += str(block) + "\n"
+    #     return chain_string
     
-    def receive_data(self, transaction_string, rec_type):
-        # Parse the chain string and create block objects
-        # blocks_data = chain_string.strip().split('\n')
-        # self.chain = []
-        # for block_data in blocks_data:
-        index = int(transaction_string.split('#')[1].strip())
+    # def receive_data(self, transaction_string, rec_type):
+    #     # Parse the chain string and create block objects
+    #     # blocks_data = chain_string.strip().split('\n')
+    #     # self.chain = []
+    #     # for block_data in blocks_data:
+    #     index = int(transaction_string.split('#')[1].strip())
         
-        if( rec_type == TRANSACTION):
-            transaction = Transaction(index)
-            self.transactionpool.append(transaction)
-        elif(rec_type == BLOCK):
-            block = Block(index)
-            self.chain.append(block)
+    #     if( rec_type == TRANSACTION):
+    #         transaction = Transaction(index)
+    #         self.transactionpool.append(transaction)
+    #     elif(rec_type == BLOCK):
+    #         block = Block(index)
+    #         self.chain.append(block)
         
             
     def all_nodes(self):
@@ -400,49 +400,49 @@ class Node(threading.Thread):
         if self.callback is not None:
             self.callback("outbound_node_disconnected", self, node, {})
 
-    def node_message(self, node, data):
-        """This method is invoked when a node send us a message.
-            data is a string, need to convert to a message object
-        """
-        self.debug_print("node_message: " + node.id + ": " + str(data))
-        print(data)
-        parts = str(data).split(":")
-        messagebody = parts[0]
-        type = parts[1]
-        isBroadcast = parts[2]
-        message_id = int(parts[3])
+    # def node_message(self, node, data):
+    #     """This method is invoked when a node send us a message.
+    #         data is a string, need to convert to a message object
+    #     """
+    #     self.debug_print("node_message: " + node.id + ": " + str(data))
+    #     print(data)
+    #     parts = str(data).split(":")
+    #     messagebody = parts[0]
+    #     type = parts[1]
+    #     isBroadcast = parts[2]
+    #     message_id = int(parts[3])
 
-        print("Message Structure starts")
-        print(messagebody)
-        print(type)
-        print(isBroadcast)
-        print(message_id)
-        print("Message Structure ends")
+    #     print("Message Structure starts")
+    #     print(messagebody)
+    #     print(type)
+    #     print(isBroadcast)
+    #     print(message_id)
+    #     print("Message Structure ends")
         
-        if int(type) == BLOCKCHAIN: 
-            self.receive_chain(messagebody)
-            self.display_chain()
-        elif int(type) == TRANSACTION:
-            self.receive_data(messagebody,type)
-            print("Transaction received")
-            print(messagebody)
-        elif int(type) == BLOCK:
-            self.receive_data(messagebody,type)
-            print("Block received")
-            print(messagebody)
-        elif int(type) == ACCESS:
-            print(f"Access request received from node {node.id}")
-            print("Press 5 to accept the request")
-        else:
-            print("Invalid message type")
+    #     if int(type) == BLOCKCHAIN: 
+    #         self.receive_chain(messagebody)
+    #         self.display_chain()
+    #     elif int(type) == TRANSACTION:
+    #         self.receive_data(messagebody,type)
+    #         print("Transaction received")
+    #         print(messagebody)
+    #     elif int(type) == BLOCK:
+    #         self.receive_data(messagebody,type)
+    #         print("Block received")
+    #         print(messagebody)
+    #     elif int(type) == ACCESS:
+    #         print(f"Access request received from node {node.id}")
+    #         print("Press 5 to accept the request")
+    #     else:
+    #         print("Invalid message type")
             
-        if isBroadcast == "True":
-            if message_id not in self.broadcasted_messages:
-                self.broadcasted_messages.add(message_id)
-                self.send_to_nodes(data, exclude=[node])
+    #     if isBroadcast == "True":
+    #         if message_id not in self.broadcasted_messages:
+    #             self.broadcasted_messages.add(message_id)
+    #             self.send_to_nodes(data, exclude=[node])
             
-        if self.callback is not None:
-            self.callback("node_message", self, node, data)
+    #     if self.callback is not None:
+    #         self.callback("node_message", self, node, data)
 
     def node_disconnect_with_outbound_node(self, node):
         """This method is invoked just before the connection is closed with the outbound node. From the node

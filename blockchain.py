@@ -12,9 +12,10 @@ import time
 sys.path.insert(0, '..') # Import the files where the modules are located
 
 from MyOwnPeer2PeerNode import MyOwnPeer2PeerNode
+from Miner import Miner
 from constants import *
 # node_1 = MyOwnPeer2PeerNode("10.150.34.237", 8001, 2 ,  [Block.create_genesis_block(), Block(1), Block(2)])
-node_1 = MyOwnPeer2PeerNode("10.150.34.237", 8003 ,3)
+node_1 = Miner("10.150.34.237", 8001 ,1)
 # node_3 = MyOwnPeer2PeerNode("10.20.1.105", 8003, 3)
 
 # time.sleep(1)
@@ -62,20 +63,19 @@ while(True):
     choice = int(input())
     
     if choice == 1:
-        node_1.send_to_nodes(Message("Request access to the blockchain", ACCESS , 3 , False))
+        node_1.send_to_nodes(Message("Request access to the blockchain", ACCESS , False))
     elif choice == 2:
-        node_1.send_to_nodes(Message(Block(3), BLOCK , 2 , True))
+        node_1.add_block(Block(3))
+        node_1.send_to_nodes(Message(Block(3), BLOCK , True))
     elif choice == 3:
-        node_1.send_to_nodes(Message(Transaction(1), TRANSACTION , 1 , True))
+        node_1.send_to_nodes(Message(Transaction(1), TRANSACTION ,True))
     elif choice == 7:
-        node_1.connect_with_node("10.150.34.237" , 8002)
+        node_1.connect_with_node("172.16.114.137" , 8002)
     elif choice == 4:
         node_1.stop()
         break
-    elif choice == 5:
-        print("Enter the node id to which you want to send the chain")
-        id = int(input())
-        node_1.send_through_id(id, Message(node_1.get_chain_string(), BLOCKCHAIN , 4 , False))
+    elif choice == 6:
+        node_1.display_chain();
     
     
 print('end test')
