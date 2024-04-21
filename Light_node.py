@@ -19,10 +19,6 @@ class LightNode (Node):
             self.chain.append(block_hash)
 
     def receive_data(self, transaction_string, rec_type):
-        # Parse the chain string and create block objects
-        # blocks_data = chain_string.strip().split('\n')
-        # self.chain = []
-        # for block_data in blocks_data:
         index = int(transaction_string.split('#')[1].strip())
 
         if(rec_type == BLOCK):
@@ -39,15 +35,8 @@ class LightNode (Node):
         messagebody = parts[0]
         type = int(parts[1])
         isBroadcast = parts[2]
-        print(parts[3])
         message_id = parts[3]
 
-        print("Message Structure starts")
-        print(messagebody)
-        print(type)
-        print(isBroadcast)
-        print(message_id)
-        print("Message Structure ends")
         
         if type == BLOCKCHAIN: 
             self.receive_chain(chain_string = messagebody)
@@ -57,18 +46,15 @@ class LightNode (Node):
             print("Block received")
             print(messagebody)
         elif type == ACCESS:
-            self.send_through_id(node.id ,Message("I am not a full node", INFO , False))
+            self.send_to_node(node ,Message("I am not a full node", INFO , False))
         elif type == INFO:
             print(messagebody + " from " + node.id)
-        # else:
-        #     print("Invalid message type")
+
         if isBroadcast:
             if message_id not in self.broadcasted_messages:
                 self.broadcasted_messages.add(message_id)
                 self.send_to_nodes(data, exclude=[node])
             
-        # if self.callback is not None:
-        #     self.callback("node_message", self, node, data)
 
     def display_chain(self):
         for block in self.chain:
