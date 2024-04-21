@@ -6,6 +6,7 @@ INFO = 5
 
 from datetime import datetime
 import time
+import socket
 
 class Transaction:
     def __init__(self, index=None):

@@ -1,5 +1,6 @@
 import sys
 import time
+import socket
 sys.path.insert(0, '..') # Import the files where the modules are located
 
 
@@ -8,8 +9,13 @@ from Full_node import FullNode
 from Light_node import LightNode
 from constants import *
 
+def get_ip_address():
+    hostname = socket.gethostname()
+    ip_address = socket.gethostbyname(hostname)
+    return ip_address
+
 def full_node():
-    ip = input("Enter your ip address")
+    ip = get_ip_address()
     node_1 = FullNode(ip, 8001 , chain= [Block.create_genesis_block(), Block(1), Block(2)])
     node_1.start()
     while(True):
@@ -40,7 +46,7 @@ def full_node():
     print('Left')
     
 def miner():
-    ip = input("Enter your ip address")
+    ip = get_ip_address()
     node_1 = Miner(ip, 8001)
     node_1.start()
     while(True):
@@ -76,7 +82,7 @@ def miner():
     
     
 def light_node():
-    ip = input("Enter your ip address")
+    ip = get_ip_address()
     node_1 = LightNode(ip, 8003 ,3)
     node_1.start()
 
