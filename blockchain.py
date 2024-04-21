@@ -10,9 +10,17 @@ from Light_node import LightNode
 from constants import *
 
 def get_ip_address():
-    hostname = socket.gethostname()
-    ip_address = socket.gethostbyname(hostname)
-    return ip_address
+    try:
+        # Create a socket object
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        # Connect to a remote server (doesn't have to be reachable)
+        s.connect(("8.8.8.8", 80))
+        # Get the local IP address
+        ipv4_address = s.getsockname()[0]
+        return ipv4_address
+    except Exception as e:
+        print("Error occurred while getting IPv4 address:", e)
+        return None
 
 def full_node():
     ip = get_ip_address()

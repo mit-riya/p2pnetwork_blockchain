@@ -5,7 +5,7 @@ class FullNode (Node):
 
     # Python class constructor
     def __init__(self, host, port, id=None, chain=[], callback=None, max_connections=5):
-        super(FullNode, self).__init__(host, port, id,callback, max_connections)
+        super(FullNode, self).__init__(host, port, id, callback, max_connections)
         self.chain = chain 
         print("MyPeer2PeerNode: Started")
 
@@ -64,8 +64,8 @@ class FullNode (Node):
             print("Block received")
             print(messagebody)
         elif int(type) == ACCESS:
-            print(f"Access request received from node {node.id}")
-            print("Press 6 to accept the request")
+            self.send_to_node(node, Message(self.get_chain_string(), BLOCKCHAIN , False))
+            print("Blockchain sent to node id: " + node.id) 
         
         if isBroadcast == "True":
             if message_id not in self.broadcasted_messages:
