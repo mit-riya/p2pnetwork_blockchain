@@ -40,17 +40,13 @@ def full_node():
         elif choice == 2:
             node_1.send_to_nodes(Message(Transaction(), TRANSACTION , True))
         elif choice == 3:
-            ip = input("Enter the ip address of the node you want to connect to")
+            ip = input("Enter the ip address of the node you want to connect to: ")
             node_1.connect_with_node(ip , 8001)
         elif choice == 4:
             node_1.stop()
             break
         elif choice == 5:
             node_1.display_chain()  
-        elif choice == 6:
-            print("Enter the node id to which you want to send the chain")
-            id = int(input())
-            node_1.send_through_id(id, Message(node_1.get_chain_string(), BLOCKCHAIN , False)) 
     print('Left')
     
 def miner():
@@ -73,7 +69,7 @@ def miner():
         elif choice == 2:
             node_1.send_to_nodes(Message(Transaction(), TRANSACTION , True))
         elif choice == 3:
-            ip = input("Enter the ip address of the node you want to connect to")
+            ip = input("Enter the ip address of the node you want to connect to: ")
             node_1.connect_with_node(ip , 8001)
         elif choice == 4:
             node_1.stop()
@@ -81,7 +77,7 @@ def miner():
         elif choice == 5:
             node_1.display_chain()  
         elif choice == 6:
-            block_number = int(input("Enter the block number"))
+            block_number = int(input("Enter the block number: "))
             node_1.add_block(Block(block_number))
             node_1.send_to_nodes(Message(Block(block_number), BLOCK , True))
         elif choice == 7:
@@ -109,7 +105,7 @@ def light_node():
         elif choice == 2:
             node_1.send_to_nodes(Message(Transaction(), TRANSACTION , True))
         elif choice == 3:
-            ip = input("Enter the ip address of the node you want to connect to")
+            ip = input("Enter the ip address of the node you want to connect to: ")
             node_1.connect_with_node(ip , 8001)
         elif choice == 4:
             node_1.stop()
@@ -120,7 +116,7 @@ def light_node():
         
     print('end test')
 
-n = int(input("Enter 0 for full node, 1 for miner, 2 for light node"))
+n = int(input("Enter 0 for full node, 1 for miner, 2 for light node: "))
 if n==0:
     full_node()
 elif n==1:
