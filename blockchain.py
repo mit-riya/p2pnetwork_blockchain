@@ -81,8 +81,9 @@ def miner():
         elif choice == 5:
             node_1.display_chain()  
         elif choice == 6:
-            node_1.add_block(Block(3))
-            node_1.send_to_nodes(Message(Block(3), BLOCK , True))
+            block_number = int(input("Enter the block number"))
+            node_1.add_block(Block(block_number))
+            node_1.send_to_nodes(Message(Block(block_number), BLOCK , True))
         elif choice == 7:
             node_1.print_transaction_pool()
     print('Left')

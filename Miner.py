@@ -1,10 +1,3 @@
-#######################################################################################################################
-# Author: Maurice Snoeren                                                                                             #
-# Version: 0.2 beta (use at your own risk)                                                                            #
-#                                                                                                                     #
-# MyOwnPeer2PeerNode is an example how to use the p2pnet.Node to implement your own peer-to-peer network node.        #
-# 28/06/2021: Added the new developments on id and max_connections
-#######################################################################################################################
 from node import Node
 from constants import *
 import hashlib
@@ -77,13 +70,6 @@ class Miner (Node):
         isBroadcast = parts[2]
         message_id = int(parts[3])
 
-        print("Message Structure starts")
-        print(messagebody)
-        print(type)
-        print(isBroadcast)
-        print(message_id)
-        print("Message Structure ends")
-        
         if int(type) == BLOCKCHAIN: 
             self.receive_chain(messagebody)
             self.display_chain()
@@ -96,13 +82,10 @@ class Miner (Node):
             print("Block received")
             print(messagebody)
         elif int(type) == ACCESS:
-            self.send_through_id(node.id ,Message("I am not a full node", INFO , False))
+            self.send_to_node(node ,Message("I am not a full node", INFO , False))
         elif int(type) == INFO:
             print(messagebody + " from " + node.id)
-        
-        # else:
-        #     print("wrong message type")
-            
+
         if isBroadcast == "True":
             if message_id not in self.broadcasted_messages:
                 self.broadcasted_messages.add(message_id)
