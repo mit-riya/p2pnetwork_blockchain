@@ -17,7 +17,6 @@ class Miner (Node):
         print("Miner: Started")
         self.hash_chain = hash_chain 
         self.transactionpool = transactionpool
-        self.broadcasted_messages = set()
             
     def receive_chain(self, chain_string):
         # Parse the chain string and create block objects

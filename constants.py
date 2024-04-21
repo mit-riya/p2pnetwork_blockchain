@@ -8,8 +8,8 @@ from datetime import datetime
 import time
 
 class Transaction:
-    def __init__(self,index) -> None:
-        self.index = index 
+    def __init__(self) -> None:
+        self.index = int(1000*time.time())
     def __str__(self):
         return f"Transaction #{self.index}"
     
@@ -19,18 +19,6 @@ class Message:
         self.type = type
         self.messageid = int(1000*time.time())
         self.isBroadcast = isBroadcast
-
-    # def get_seconds_difference():
-    #     # Define the specific date and time
-    #     specific_datetime = datetime(year=2022, month=4, day=20, hour=12, minute=0)
-
-    #     # Get the current date and time
-    #     current_datetime = datetime.now()
-
-    #     # Calculate the difference in seconds
-    #     difference = (current_datetime - specific_datetime).total_seconds()
-
-    #     return difference
     
     def getMessageBody(self):
         return self.messagebody

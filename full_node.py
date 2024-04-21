@@ -65,7 +65,7 @@ class FullNode (Node):
             print(messagebody)
         elif int(type) == ACCESS:
             print(f"Access request received from node {node.id}")
-            print("Press 5 to accept the request")
+            print("Press 6 to accept the request")
         
         if isBroadcast == "True":
             if message_id not in self.broadcasted_messages:
