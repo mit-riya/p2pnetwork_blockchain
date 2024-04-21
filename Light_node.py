@@ -6,7 +6,7 @@ class LightNode (Node):
 
     # Python class constructor
     def __init__(self, host, port, id=None, chain=[], callback=None, max_connections=5):
-        super(LightNode, self).__init__(host, port, id, chain, callback, max_connections)
+        super(LightNode, self).__init__(host, port, id, callback, max_connections)
         self.chain = chain 
         print("Light Node: Started")
 

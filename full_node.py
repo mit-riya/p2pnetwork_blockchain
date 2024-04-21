@@ -5,7 +5,7 @@ class FullNode (Node):
 
     # Python class constructor
     def __init__(self, host, port, id=None, chain=[], callback=None, max_connections=5):
-        super(FullNode, self).__init__(host, port, id, chain,callback, max_connections)
+        super(FullNode, self).__init__(host, port, id,callback, max_connections)
         self.chain = chain 
         print("MyPeer2PeerNode: Started")
 

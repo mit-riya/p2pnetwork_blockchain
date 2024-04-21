@@ -24,7 +24,7 @@ def full_node():
         if choice == 1:
             node_1.send_to_nodes(Message("Request access to the blockchain", ACCESS , False))
         elif choice == 2:
-            node_1.send_to_nodes(Message(Transaction, TRANSACTION , True))
+            node_1.send_to_nodes(Message(Transaction(), TRANSACTION , True))
         elif choice == 3:
             ip = input("Enter the ip address of the node you want to connect to")
             node_1.connect_with_node(ip , 8001)
@@ -57,7 +57,7 @@ def miner():
         if choice == 1:
             node_1.send_to_nodes(Message("Request access to the blockchain", ACCESS , False))
         elif choice == 2:
-            node_1.send_to_nodes(Message(Transaction, TRANSACTION , True))
+            node_1.send_to_nodes(Message(Transaction(), TRANSACTION , True))
         elif choice == 3:
             ip = input("Enter the ip address of the node you want to connect to")
             node_1.connect_with_node(ip , 8001)
@@ -92,7 +92,7 @@ def light_node():
         if choice == 1:
             node_1.send_to_nodes(Message("Request access to the blockchain", ACCESS ,  False))
         elif choice == 2:
-            node_1.send_to_nodes(Message(Transaction, TRANSACTION , True))
+            node_1.send_to_nodes(Message(Transaction(), TRANSACTION , True))
         elif choice == 3:
             ip = input("Enter the ip address of the node you want to connect to")
             node_1.connect_with_node(ip , 8001)

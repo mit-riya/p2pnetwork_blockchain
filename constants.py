@@ -8,8 +8,11 @@ from datetime import datetime
 import time
 
 class Transaction:
-    def __init__(self) -> None:
-        self.index = int(1000*time.time())
+    def __init__(self, index=None):
+        if not index:
+            self.index = int(1000*time.time())
+        else:
+            self.index = index
     def __str__(self):
         return f"Transaction #{self.index}"
     
