@@ -7,16 +7,6 @@ import datetime
 
 from nodeconnection import NodeConnection
 from constants import *
-"""
-Author: Maurice Snoeren <macsnoeren(at)gmail.com>
-Version: 0.3 beta (use at your own risk)
-Date: 7-5-2020
-
-Python package p2pnet for implementing decentralized peer-to-peer network applications
-
-TODO: Also create events when things go wrong, like a connection with a node has failed.
-"""
-
 
 
 class Node(threading.Thread):
@@ -134,20 +124,10 @@ class Node(threading.Thread):
                 self.debug_print("Node send_to_nodes: Excluding node in sending the message")
             else:
                 self.send_to_node(n, data, compression)
-                
-    def send_through_id(self, id, data, compression='none'):
-        for n in self.nodes_inbound:
-            if int(n.id) == int(id):
-                self.send_to_node(n, data, compression)
-        for n in self.nodes_outbound:
-            if int(n.id) == int(id):
-                self.send_to_node(n, data, compression)
 
     def send_to_node(self, n, data, compression='none'):
         """ Send the data to the node n if it exists."""
         self.message_count_send = self.message_count_send + 1
-        print("send called ",n)
-        print(str(data))
         if n in self.nodes_inbound or n in self.nodes_outbound:
             n.send(str(data), compression=compression)
 
@@ -174,10 +154,8 @@ class Node(threading.Thread):
 
         try:
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            print("REACHED HERE")
             self.debug_print("connecting to %s port %s" % (host, port))
             sock.connect((host, port))
-            print("REACHED HERE AGAIN")
             # Basic information exchange (not secure) of the id's of the nodes!
             sock.send((self.id + ":" + str(self.port)).encode('utf-8')) # Send my id and port to the connected node!
             connected_node_id = sock.recv(4096).decode('utf-8') # When a node is connected, it sends its id!
