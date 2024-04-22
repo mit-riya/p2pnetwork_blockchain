@@ -92,7 +92,7 @@ def miner():
     
 def light_node():
     ip = get_ip_address()
-    node_1 = LightNode(ip, 8003 ,3)
+    node_1 = LightNode(ip, 8001 )
     node_1.start()
 
     while(True):
