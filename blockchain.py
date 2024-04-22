@@ -24,6 +24,7 @@ def get_ip_address():
 
 def full_node():
     ip = get_ip_address()
+    print(f"Your ip is {ip}\n")    
     node_1 = FullNode(ip, 8001 , chain= [Block.create_genesis_block(), Block(1), Block(2)])
     node_1.start()
     while(True):
@@ -40,21 +41,18 @@ def full_node():
         elif choice == 2:
             node_1.send_to_nodes(Message(Transaction(), TRANSACTION , True))
         elif choice == 3:
-            ip = input("Enter the ip address of the node you want to connect to")
+            ip = input("Enter the ip address of the node you want to connect to \n")
             node_1.connect_with_node(ip , 8001)
         elif choice == 4:
             node_1.stop()
             break
         elif choice == 5:
             node_1.display_chain()  
-        elif choice == 6:
-            print("Enter the node id to which you want to send the chain")
-            id = int(input())
-            node_1.send_through_id(id, Message(node_1.get_chain_string(), BLOCKCHAIN , False)) 
     print('Left')
     
 def miner():
     ip = get_ip_address()
+    print(f"Your ip is {ip}\n")
     node_1 = Miner(ip, 8001)
     node_1.start()
     while(True):
@@ -73,7 +71,7 @@ def miner():
         elif choice == 2:
             node_1.send_to_nodes(Message(Transaction(), TRANSACTION , True))
         elif choice == 3:
-            ip = input("Enter the ip address of the node you want to connect to")
+            ip = input("Enter the ip address of the node you want to connect to \n")
             node_1.connect_with_node(ip , 8001)
         elif choice == 4:
             node_1.stop()
@@ -92,6 +90,7 @@ def miner():
     
 def light_node():
     ip = get_ip_address()
+    print(f"Your ip is {ip}\n")
     node_1 = LightNode(ip, 8001)
     node_1.start()
 
@@ -109,7 +108,7 @@ def light_node():
         elif choice == 2:
             node_1.send_to_nodes(Message(Transaction(), TRANSACTION , True))
         elif choice == 3:
-            ip = input("Enter the ip address of the node you want to connect to")
+            ip = input("Enter the ip address of the node you want to connect to \n")
             node_1.connect_with_node(ip , 8001)
         elif choice == 4:
             node_1.stop()
@@ -120,7 +119,7 @@ def light_node():
         
     print('end test')
 
-n = int(input("Enter 0 for full node, 1 for miner, 2 for light node"))
+n = int(input("Enter 0 for full node, 1 for miner, 2 for light node\n"))
 if n==0:
     full_node()
 elif n==1:
