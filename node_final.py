@@ -174,10 +174,10 @@ class Node(threading.Thread):
 
         try:
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            print("REACHED HERE")
+            # print("REACHED HERE")
             self.debug_print("connecting to %s port %s" % (host, port))
             sock.connect((host, port))
-            print("REACHED HERE AGAIN")
+            # print("REACHED HERE AGAIN")
             # Basic information exchange (not secure) of the id's of the nodes!
             sock.send((self.id + ":" + str(self.port)).encode('utf-8')) # Send my id and port to the connected node!
             connected_node_id = sock.recv(4096).decode('utf-8') # When a node is connected, it sends its id!
@@ -230,8 +230,24 @@ class Node(threading.Thread):
 
     def stop(self):
         """Stop this node and terminate all the connected nodes."""
+        
         self.node_request_to_stop()
         self.terminate_flag.set()
+
+    def is_socket_closed(self,sock: socket.socket) -> bool:
+        try:
+            # this will try to read bytes without blocking and also without removing them from buffer (peek only)
+            data = sock.recv(16, socket.MSG_DONTWAIT | socket.MSG_PEEK)
+            if len(data) == 0:
+                return True
+        except BlockingIOError:
+            return False  # socket is open and reading from it would block
+        except ConnectionResetError:
+            return True  # socket was closed for some other reason
+        except Exception as e:
+            # logger.exception("unexpected exception when checking if a socket is closed")
+            return False
+        return False
 
     # This method can be overrided when a different nodeconnection is required!
     def create_new_connection(self, connection, id, host, port):
@@ -269,6 +285,15 @@ class Node(threading.Thread):
            and secondly we will send our node id to the connected node. When connected the method
            inbound_node_connected is invoked."""
         while not self.terminate_flag.is_set():  # Check whether the thread needs to be closed
+            for node_to_check in self.nodes_inbound:
+                print(self.is_socket_closed(node_to_check.sock))
+                # if(self.is_socket_closed(node_to_check.sock.socket)):
+                #     print("ASDASD")
+                # if(self.is_socket_closed(node_to_check.sock)):
+                #     print("SOCKET WAS CLOSED")
+                #     break   
+                # else :
+                #     print("\nNODE IS CONNECTED\n\n")
             try:
                 self.debug_print("Node: Wait for incoming connection")
                 connection, client_address = self.sock.accept()
@@ -294,6 +319,7 @@ class Node(threading.Thread):
                 else:
                     self.debug_print("New connection is closed. You have reached the maximum connection limit!")
                     connection.close()
+                
             
             except socket.timeout:
                 self.debug_print('Node: Connection timeout!')
@@ -305,12 +331,12 @@ class Node(threading.Thread):
 
             time.sleep(0.01)
 
-        print("Node stopping...")
+        print("Node stopping 123 123 ...")
         for t in self.nodes_inbound:
-            t.stop()
+            t.sock.close()
 
         for t in self.nodes_outbound:
-            t.stop()
+            t.sock.close()
 
         time.sleep(1)
 

@@ -1,4 +1,4 @@
-from node import Node
+from node_final import Node
 from constants import *
 
 class FullNode (Node):
