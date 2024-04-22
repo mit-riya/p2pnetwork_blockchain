@@ -333,10 +333,10 @@ class Node(threading.Thread):
 
         print("Node stopping 123 123 ...")
         for t in self.nodes_inbound:
-            t.sock.close()
+            t.stop()
 
         for t in self.nodes_outbound:
-            t.sock.close()
+            t.stop()
 
         time.sleep(1)
 
@@ -370,11 +370,11 @@ class Node(threading.Thread):
         self.debug_print("node_disconnected: " + node.id)
 
         if node in self.nodes_inbound:
-            self.nodes_inbound.remove(node)
+            # self.nodes_inbound.remove(node)
             self.inbound_node_disconnected(node)
 
         if node in self.nodes_outbound:
-            self.nodes_outbound.remove(node)
+            # self.nodes_outbound.remove(node)
             self.outbound_node_disconnected(node)
 
     def inbound_node_disconnected(self, node):
