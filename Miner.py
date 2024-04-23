@@ -18,16 +18,19 @@ class Miner (Node):
         for block_data in blocks_data:
             block_hash = hashlib.sha256(block_data.encode()).hexdigest()
             self.hash_chain.append(block_hash)
+    
+    def add_to_transaction_pool(self, transaction):
+        self.transactionpool.append(transaction)
             
     def print_transaction_pool(self):
         # ANSI escape code for green color
         green_color_code = "\033[92m"
         reset_color_code = "\033[0m"
-        print("/n")
+        print("\n")
         print(green_color_code + "Transaction Pool" + reset_color_code)
         for transaction in self.transactionpool:
             print(green_color_code + str(transaction) + reset_color_code)
-        print("/n")
+        print("\n")
             
     def display_chain(self):
         for i, block in enumerate(self.hash_chain):
@@ -83,12 +86,14 @@ class Miner (Node):
             self.display_chain()
         elif int(type) == TRANSACTION:
             self.receive_data(messagebody,type)
-            print("Transaction received")
+            print("\033[92mTransaction received\033[0m")
             print(messagebody)
+            print("\n")
         elif int(type) == BLOCK:
             self.receive_data(messagebody,type)
-            print("Block received")
+            print("\033[92mBlock received\033[0m")
             print(messagebody)
+            print("\n")
         elif int(type) == ACCESS:
             self.send_to_node(node ,Message("I am not a full node", INFO , False))
         elif int(type) == INFO:

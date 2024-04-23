@@ -70,7 +70,9 @@ def miner():
         if choice == 1:
             node_1.send_to_nodes(Message("Request access to the blockchain", ACCESS , False))
         elif choice == 2:
-            node_1.send_to_nodes(Message(Transaction(), TRANSACTION , True))
+            t1 = Transaction()
+            node_1.add_to_transaction_pool(t1)
+            node_1.send_to_nodes(Message(t1, TRANSACTION , True))
         elif choice == 3:
             ip = input("\033[92mEnter the IP address of the node you want to connect to\n\033[0m")
             node_1.connect_with_node(ip , 8001)
@@ -80,7 +82,7 @@ def miner():
         elif choice == 5:
             node_1.display_chain()  
         elif choice == 6:
-            block_number = int(input("\033[92mEnter the block number\033[0m"))
+            block_number = int(input("\033[92mEnter the block number\n\033[0m"))
             node_1.add_block(Block(block_number))
             node_1.send_to_nodes(Message(Block(block_number), BLOCK , True))
         elif choice == 7:
