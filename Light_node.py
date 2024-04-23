@@ -44,11 +44,13 @@ class LightNode (Node):
             self.receive_data(messagebody,type)
             print("\033[93mBlock received from " + node.id + "\033[0m")
             print(messagebody)
+            print("\n")
         elif type == ACCESS:
             self.send_to_node(node ,Message("I am not a full node", INFO , False))
         elif type == INFO:
             print("\033[93mMessage received from " + node.id + "\033[0m")
             print(messagebody)
+            print("\n")
 
         if isBroadcast:
             if message_id not in self.broadcasted_messages:

@@ -64,9 +64,11 @@ class FullNode (Node):
             self.receive_data(messagebody,type)
             print("\033[94mBlock received\033[0m")
             print(messagebody)
+            print("\n")
         elif int(type) == ACCESS:
             self.send_to_node(node, Message(self.get_chain_string(), BLOCKCHAIN , False))
             print("Blockchain sent to node id: " + node.id)
+            print("\n")
 
         if isBroadcast == "True":
             if message_id not in self.broadcasted_messages:
