@@ -146,8 +146,6 @@ class Node(threading.Thread):
     def send_to_node(self, n, data, compression='none'):
         """ Send the data to the node n if it exists."""
         self.message_count_send = self.message_count_send + 1
-        print("send called ",n)
-        print(str(data))
         if n in self.nodes_inbound or n in self.nodes_outbound:
             n.send(str(data), compression=compression)
 

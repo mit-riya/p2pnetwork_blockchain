@@ -77,19 +77,19 @@ class FullNode (Node):
         #     self.callback("node_message", self, node, data)
 
     def outbound_node_connected(self, node):
-        print("\033[94moutbound_node_connected (" + self.id + "): " + node.id + "\033[0m")
+        print("\033[94moutbound_node_connected: "  + node.host + "\033[0m")
 
     def inbound_node_connected(self, node):
-        print("\033[94minbound_node_connected: (" + self.id + "): " + node.id + "\033[0m")
+        print("\033[94minbound_node_connected: " + node.host + "\033[0m")
 
     def inbound_node_disconnected(self, node):
-        print("\033[94minbound_node_disconnected: (" + self.id + "): " + node.id + "\033[0m")
+        print("\033[94minbound_node_disconnected: "  + node.host + "\033[0m")
 
     def outbound_node_disconnected(self, node):
-        print("\033[94moutbound_node_disconnected: (" + self.id + "): " + node.id + "\033[0m")
+        print("\033[94moutbound_node_disconnected: "  + node.host + "\033[0m")
 
     def node_disconnect_with_outbound_node(self, node):
-        print("\033[94mnode wants to disconnect with other outbound node: (" + self.id + "): " + node.id + "\033[0m")
+        print("\033[94mnode wants to disconnect with other outbound node: " + node.host + "\033[0m")
 
     def node_request_to_stop(self):
-        print("\033[94mnode is requested to stop (" + self.id + "):\033[0m")
+        print("\033[94mnode is requested to stop: " + self.host + "\033[0m")

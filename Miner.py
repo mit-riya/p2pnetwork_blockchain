@@ -51,16 +51,16 @@ class Miner (Node):
             self.hash_chain.append(block_hash)
 
     def outbound_node_connected(self, node):
-        print("\033[92moutbound_node_connected (" + self.id + "): " + node.host + "\033[0m")
+        print(f"\033[92moutbound_node_connected : {node.host}:{node.port} \033[0m")
 
     def inbound_node_connected(self, node):
-        print("\033[92minbound_node_connected: (" + self.id + "): " + node.host + "\033[0m")
+        print(f"\033[92minbound_node_connected : {node.host}:{node.port} \033[0m")
 
     def inbound_node_disconnected(self, node):
-        print("\033[92minbound_node_disconnected: (" + self.id + "): " + node.host + "\033[0m")
+        print(f"\033[92minbound_node_disconnected : {node.host}:{node.port} \033[0m")
 
     def outbound_node_disconnected(self, node):
-        print("\033[92moutbound_node_disconnected: (" + self.id + "): " + node.host + "\033[0m")
+        print(f"\033[92moutbound_node_disconnected : {node.host}:{node.port} \033[0m")
 
 
 
@@ -100,7 +100,7 @@ class Miner (Node):
                 self.send_to_nodes(data, exclude=[node])
         
     def node_disconnect_with_outbound_node(self, node):
-        print("\033[92mnode wants to disconnect with other outbound node: (" + self.id + "): " + node.id + "\033[0m")
+        print("\033[92mnode wants to disconnect with other outbound node:" + node.id + "\033[0m")
 
     def node_request_to_stop(self):
         print("\033[92mnode is requested to stop\033[0m")

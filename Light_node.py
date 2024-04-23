@@ -61,19 +61,19 @@ class LightNode (Node):
             print("\033[93mBlock {} hash: {}\033[0m".format(i + 1, block))
 
     def outbound_node_connected(self, node):
-        print("\033[93moutbound_node_connected ({}): {}\033[0m".format(self.id, node.id))
+        print("\033[93moutbound_node_connected {}: {}\033[0m".format(node.host, node.port))
 
     def inbound_node_connected(self, node):
-        print("\033[93minbound_node_connected: ({}): {}\033[0m".format(self.id, node.id))
+        print("\033[93minbound_node_connected: {}: {}\033[0m".format(node.host, node.port))
 
     def inbound_node_disconnected(self, node):
-        print("\033[93minbound_node_disconnected: ({}): {}\033[0m".format(self.id, node.id))
+        print("\033[93minbound_node_disconnected: {}: {}\033[0m".format(node.host, node.port))
 
     def outbound_node_disconnected(self, node):
-        print("\033[93moutbound_node_disconnected: ({}): {}\033[0m".format(self.id, node.id))
+        print("\033[93moutbound_node_disconnected: {}: {}\033[0m".format(node.host, node.port))
 
     def node_disconnect_with_outbound_node(self, node):
-        print("\033[93mnode wants to disconnect with other outbound node: ({}): {}\033[0m".format(self.id, node.id))
+        print("\033[93mnode wants to disconnect with other outbound node: {}: {}\033[0m".format(node.host, node.port))
 
     def node_request_to_stop(self):
         print("\033[93mnode is requested to stop ({}):\033[0m".format(self.id))
