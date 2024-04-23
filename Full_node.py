@@ -7,7 +7,8 @@ class FullNode (Node):
     def __init__(self, host, port, id=None, chain=[], callback=None, max_connections=5):
         super(FullNode, self).__init__(host, port, id, callback, max_connections)
         self.chain = chain 
-        print("MyPeer2PeerNode: Started")
+        print("\033[94mFull Node Started\033[0m")
+
 
     def receive_chain(self, chain_string):
         # Parse the chain string and create block objects
@@ -41,32 +42,32 @@ class FullNode (Node):
         """This method is invoked when a node send us a message.
             data is a string, need to convert to a message object
         """
-        self.debug_print("node_message: " + node.id + ": " + str(data))
-        print(data)
+        # self.debug_print("node_message: " + node.id + ": " + str(data))
+        # print(data)
         parts = str(data).split(":")
         messagebody = parts[0]
         type = parts[1]
         isBroadcast = parts[2]
         message_id = int(parts[3])
 
-        print("Message Structure starts")
-        print(messagebody)
-        print(type)
-        print(isBroadcast)
-        print(message_id)
-        print("Message Structure ends")
+        # print("Message Structure starts")
+        # print(messagebody)
+        # print(type)
+        # print(isBroadcast)
+        # print(message_id)
+        # print("Message Structure ends")
         
         if int(type) == BLOCKCHAIN: 
             self.receive_chain(messagebody)
             self.display_chain()
         elif int(type) == BLOCK:
             self.receive_data(messagebody,type)
-            print("Block received")
+            print("\033[94mBlock received\033[0m")
             print(messagebody)
         elif int(type) == ACCESS:
             self.send_to_node(node, Message(self.get_chain_string(), BLOCKCHAIN , False))
-            print("Blockchain sent to node id: " + node.id) 
-        
+            print("Blockchain sent to node id: " + node.id)
+
         if isBroadcast == "True":
             if message_id not in self.broadcasted_messages:
                 self.broadcasted_messages.add(message_id)
@@ -76,19 +77,19 @@ class FullNode (Node):
         #     self.callback("node_message", self, node, data)
 
     def outbound_node_connected(self, node):
-        print("outbound_node_connected (" + self.id + "): " + node.id)
-        
+        print("\033[94moutbound_node_connected (" + self.id + "): " + node.id + "\033[0m")
+
     def inbound_node_connected(self, node):
-        print("inbound_node_connected: (" + self.id + "): " + node.id)
+        print("\033[94minbound_node_connected: (" + self.id + "): " + node.id + "\033[0m")
 
     def inbound_node_disconnected(self, node):
-        print("inbound_node_disconnected: (" + self.id + "): " + node.id)
+        print("\033[94minbound_node_disconnected: (" + self.id + "): " + node.id + "\033[0m")
 
     def outbound_node_disconnected(self, node):
-        print("outbound_node_disconnected: (" + self.id + "): " + node.id)
-  
+        print("\033[94moutbound_node_disconnected: (" + self.id + "): " + node.id + "\033[0m")
+
     def node_disconnect_with_outbound_node(self, node):
-        print("node wants to disconnect with oher outbound node: (" + self.id + "): " + node.id)
-        
+        print("\033[94mnode wants to disconnect with other outbound node: (" + self.id + "): " + node.id + "\033[0m")
+
     def node_request_to_stop(self):
-        print("node is requested to stop (" + self.id + "): ")
+        print("\033[94mnode is requested to stop (" + self.id + "):\033[0m")

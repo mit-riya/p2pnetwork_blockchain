@@ -24,16 +24,17 @@ def get_ip_address():
 
 def full_node():
     ip = get_ip_address()
-    print(f"Your ip is {ip}\n")    
+    print("\033[94m" + f"Your ip is {ip}\n" + "\033[0m")
+
     node_1 = FullNode(ip, 8001 , chain= [Block.create_genesis_block(), Block(1), Block(2)])
     node_1.start()
     while(True):
-        print("Press 1 to request access to the blockchain")
-        print("Press 2 to broadcast a transaction")
-        print("Press 3 to connect to node")
-        print("Press 4 to stop the node")
-        print("Press 5 to display the chain")
-        
+        print("\033[94mPress 1 to request access to the blockchain\033[0m")
+        print("\033[94mPress 2 to broadcast a transaction\033[0m")
+        print("\033[94mPress 3 to connect to node\033[0m")
+        print("\033[94mPress 4 to stop the node\033[0m")
+        print("\033[94mPress 5 to display the chain\033[0m")
+
         choice = int(input())
         
         if choice == 1:
@@ -41,29 +42,29 @@ def full_node():
         elif choice == 2:
             node_1.send_to_nodes(Message(Transaction(), TRANSACTION , True))
         elif choice == 3:
-            ip = input("Enter the ip address of the node you want to connect to \n")
+            ip = input("\033[94mEnter the IP address of the node you want to connect to\n\033[0m")
             node_1.connect_with_node(ip , 8001)
         elif choice == 4:
             node_1.stop()
             break
         elif choice == 5:
             node_1.display_chain()  
-    print('Left')
+    print('Left the blockchain')
     
 def miner():
     ip = get_ip_address()
-    print(f"Your ip is {ip}\n")
+    print("\033[92m" + f"Your ip is {ip}\n" + "\033[0m")
     node_1 = Miner(ip, 8001)
     node_1.start()
     while(True):
-        print("Press 1 to request access to the blockchain")
-        print("Press 2 to broadcast a transaction")
-        print("Press 3 to connect to node")
-        print("Press 4 to stop the node")
-        print("Press 5 to display the chain")
-        print("Press 6 to broadcast a block")
-        print("Press 7 to get transactions pool")
-        
+        print("\033[92mPress 1 to request access to the blockchain\033[0m")
+        print("\033[92mPress 2 to broadcast a transaction\033[0m")
+        print("\033[92mPress 3 to connect to node\033[0m")
+        print("\033[92mPress 4 to stop the node\033[0m")
+        print("\033[92mPress 5 to display the chain\033[0m")
+        print("\033[92mPress 6 to broadcast a block\033[0m")
+        print("\033[92mPress 7 to get transactions pool\033[0m")
+
         choice = int(input())
         
         if choice == 1:
@@ -71,7 +72,7 @@ def miner():
         elif choice == 2:
             node_1.send_to_nodes(Message(Transaction(), TRANSACTION , True))
         elif choice == 3:
-            ip = input("Enter the ip address of the node you want to connect to \n")
+            ip = input("\033[92mEnter the IP address of the node you want to connect to\n\033[0m")
             node_1.connect_with_node(ip , 8001)
         elif choice == 4:
             node_1.stop()
@@ -79,27 +80,28 @@ def miner():
         elif choice == 5:
             node_1.display_chain()  
         elif choice == 6:
-            block_number = int(input("Enter the block number"))
+            block_number = int(input("\033[92mEnter the block number\033[0m"))
             node_1.add_block(Block(block_number))
             node_1.send_to_nodes(Message(Block(block_number), BLOCK , True))
         elif choice == 7:
             node_1.print_transaction_pool()
-    print('Left')
+    print('Left the blockchain')
     
     
     
 def light_node():
     ip = get_ip_address()
-    print(f"Your ip is {ip}\n")
+    print("\033[91m" + f"Your ip is {ip}\n" + "\033[0m")
     node_1 = LightNode(ip, 8001)
     node_1.start()
 
     while(True):
-        print("Press 1 to request access to the blockchain")
-        print("Press 2 to broadcast a transaction")
-        print("Press 3 to connect to a node")
-        print("Press 4 to stop the node")
-        print("Press 5 to display the chain")
+        print("\033[91mPress 1 to request access to the blockchain\033[0m")
+        print("\033[91mPress 2 to broadcast a transaction\033[0m")
+        print("\033[91mPress 3 to connect to a node\033[0m")
+        print("\033[91mPress 4 to stop the node\033[0m")
+        print("\033[91mPress 5 to display the chain\033[0m")
+
         
         choice = int(input())
         
@@ -108,16 +110,14 @@ def light_node():
         elif choice == 2:
             node_1.send_to_nodes(Message(Transaction(), TRANSACTION , True))
         elif choice == 3:
-            ip = input("Enter the ip address of the node you want to connect to \n")
+            ip = input("\033[91mEnter the IP address of the node you want to connect to\n\033[0m")
             node_1.connect_with_node(ip , 8001)
         elif choice == 4:
             node_1.stop()
             break
         elif choice == 5:
             node_1.display_chain()
-        
-        
-    print('end test')
+    print('Left the blockchain')
 
 n = int(input("Enter 0 for full node, 1 for miner, 2 for light node\n"))
 if n==0:

@@ -8,7 +8,7 @@ class LightNode (Node):
     def __init__(self, host, port, id=None, chain=[], callback=None, max_connections=5):
         super(LightNode, self).__init__(host, port, id, callback, max_connections)
         self.chain = chain 
-        print("Light Node: Started")
+        print("\033[91mLight Node: Started\033[0m")
 
     def receive_chain(self, chain_string):
         # Parse the chain string and create block objects
@@ -30,25 +30,25 @@ class LightNode (Node):
         """This method is invoked when a node send us a message.
             data is a string, need to convert to a message object
         """
-        self.debug_print("node_message: " + node.id + ": " + str(data))
+        # self.debug_print("node_message: " + node.id + ": " + str(data))
         parts = str(data).split(":")
         messagebody = parts[0]
         type = int(parts[1])
         isBroadcast = parts[2]
         message_id = parts[3]
-
         
         if type == BLOCKCHAIN: 
             self.receive_chain(chain_string = messagebody)
             self.display_chain()
         elif type == BLOCK:
             self.receive_data(messagebody,type)
-            print("Block received")
+            print("\033[91mBlock received from " + node.id + "\033[0m")
             print(messagebody)
         elif type == ACCESS:
             self.send_to_node(node ,Message("I am not a full node", INFO , False))
         elif type == INFO:
-            print(messagebody + " from " + node.id)
+            print("\033[91mMessage received from " + node.id + "\033[0m")
+            print(messagebody)
 
         if isBroadcast:
             if message_id not in self.broadcasted_messages:
@@ -57,25 +57,27 @@ class LightNode (Node):
             
 
     def display_chain(self):
-        for block in self.chain:
-            print(block)
+        for i, block in enumerate(self.chain):
+            print(f"Block {i + 1} hash: {block}")
+
 
     def outbound_node_connected(self, node):
-        print("outbound_node_connected (" + self.id + "): " + node.id)
-        
+        print("\033[91moutbound_node_connected (" + self.id + "): " + node.id + "\033[0m")
+
     def inbound_node_connected(self, node):
-        print("inbound_node_connected: (" + self.id + "): " + node.id)
+        print("\033[91minbound_node_connected: (" + self.id + "): " + node.id + "\033[0m")
 
     def inbound_node_disconnected(self, node):
-        print("inbound_node_disconnected: (" + self.id + "): " + node.id)
+        print("\033[91minbound_node_disconnected: (" + self.id + "): " + node.id + "\033[0m")
 
     def outbound_node_disconnected(self, node):
-        print("outbound_node_disconnected: (" + self.id + "): " + node.id)
-    
+        print("\033[91moutbound_node_disconnected: (" + self.id + "): " + node.id + "\033[0m")
+
     def node_disconnect_with_outbound_node(self, node):
-        print("node wants to disconnect with oher outbound node: (" + self.id + "): " + node.id)
-        
+        print("\033[91mnode wants to disconnect with other outbound node: (" + self.id + "): " + node.id + "\033[0m")
+
     def node_request_to_stop(self):
-        print("node is requested to stop (" + self.id + "): ")
+        print("\033[91mnode is requested to stop (" + self.id + "):\033[0m")
+
         
         
