@@ -86,18 +86,20 @@ class Miner (Node):
             self.display_chain()
         elif int(type) == TRANSACTION:
             self.receive_data(messagebody,type)
-            print("\033[92mTransaction received\033[0m")
+            print("\033[92mTransaction received from " + node.host + ":" + node.port + "\033[0m")
             print(messagebody)
             print("\n")
         elif int(type) == BLOCK:
             self.receive_data(messagebody,type)
-            print("\033[92mBlock received\033[0m")
+            print("\033[92mBlock received from " + node.host + ":" + node.port + "\033[0m")
             print(messagebody)
             print("\n")
         elif int(type) == ACCESS:
             self.send_to_node(node ,Message("I am not a full node", INFO , False))
         elif int(type) == INFO:
-            print(messagebody + " from " + node.id)
+            print("\033[93mMessage received from " + node.host + ":" + node.port + "\033[0m")
+            print(messagebody)
+            print("\n")
 
         if isBroadcast == "True":
             if message_id not in self.broadcasted_messages:

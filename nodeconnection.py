@@ -172,7 +172,6 @@ class NodeConnection(threading.Thread):
     def stop(self):
         """Terminates the connection and the thread is stopped. Stop the node client. Please make sure you join the thread."""
         self.terminate_flag.set()
-        print("stop of node_connection called\n")
 
     def parse_packet(self, packet):
         """Parse the packet and determines wheter it has been send in str, json or byte format. It returns
