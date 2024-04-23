@@ -285,8 +285,8 @@ class Node(threading.Thread):
            and secondly we will send our node id to the connected node. When connected the method
            inbound_node_connected is invoked."""
         while not self.terminate_flag.is_set():  # Check whether the thread needs to be closed
-            for node_to_check in self.nodes_inbound:
-                print(self.is_socket_closed(node_to_check.sock))
+            # for node_to_check in self.nodes_inbound:
+            #     print(self.is_socket_closed(node_to_check.sock))
                 # if(self.is_socket_closed(node_to_check.sock.socket)):
                 #     print("ASDASD")
                 # if(self.is_socket_closed(node_to_check.sock)):
@@ -331,7 +331,7 @@ class Node(threading.Thread):
 
             time.sleep(0.01)
 
-        print("Node stopping 123 123 ...")
+        print("Node stopping ...")
         for t in self.nodes_inbound:
             t.stop()
 
