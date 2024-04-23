@@ -20,8 +20,14 @@ class Miner (Node):
             self.hash_chain.append(block_hash)
             
     def print_transaction_pool(self):
+        # ANSI escape code for green color
+        green_color_code = "\033[92m"
+        reset_color_code = "\033[0m"
+        print("/n")
+        print(green_color_code + "Transaction Pool" + reset_color_code)
         for transaction in self.transactionpool:
-            print(transaction)
+            print(green_color_code + str(transaction) + reset_color_code)
+        print("/n")
             
     def display_chain(self):
         for i, block in enumerate(self.hash_chain):
@@ -45,16 +51,16 @@ class Miner (Node):
             self.hash_chain.append(block_hash)
 
     def outbound_node_connected(self, node):
-        print("\033[92moutbound_node_connected (" + self.id + "): " + node.id + "\033[0m")
+        print("\033[92moutbound_node_connected (" + self.id + "): " + node.host + "\033[0m")
 
     def inbound_node_connected(self, node):
-        print("\033[92minbound_node_connected: (" + self.id + "): " + node.id + "\033[0m")
+        print("\033[92minbound_node_connected: (" + self.id + "): " + node.host + "\033[0m")
 
     def inbound_node_disconnected(self, node):
-        print("\033[92minbound_node_disconnected: (" + self.id + "): " + node.id + "\033[0m")
+        print("\033[92minbound_node_disconnected: (" + self.id + "): " + node.host + "\033[0m")
 
     def outbound_node_disconnected(self, node):
-        print("\033[92moutbound_node_disconnected: (" + self.id + "): " + node.id + "\033[0m")
+        print("\033[92moutbound_node_disconnected: (" + self.id + "): " + node.host + "\033[0m")
 
 
 
