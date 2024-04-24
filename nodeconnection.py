@@ -4,38 +4,9 @@ import threading
 import json
 import zlib, bz2, lzma, base64
 
-"""
-Author : Maurice Snoeren <macsnoeren(at)gmail.com>
-Version: 0.3 beta (use at your own risk)
-Date: 7-5-2020
-
-Python package p2pnet for implementing decentralized peer-to-peer network applications
-"""
-
-
 class NodeConnection(threading.Thread):
-    """The class NodeConnection is used by the class Node and represent the TCP/IP socket connection with another node. 
-       Both inbound (nodes that connect with the server) and outbound (nodes that are connected to) are represented by
-       this class. The class contains the client socket and hold the id information of the connecting node. Communication
-       is done by this class. When a connecting node sends a message, the message is relayed to the main node (that created
-       this NodeConnection in the first place).
-       
-       Instantiates a new NodeConnection. Do not forget to start the thread. All TCP/IP communication is handled by this 
-       connection.
-        main_node: The Node class that received a connection.
-        sock: The socket that is assiociated with the client connection.
-        id: The id of the connected node (at the other side of the TCP/IP connection).
-        host: The host/ip of the main node.
-        port: The port of the server of the main node."""
-
     def __init__(self, main_node, sock, id, host, port):
-        """Instantiates a new NodeConnection. Do not forget to start the thread. All TCP/IP communication is handled by this connection.
-            main_node: The Node class that received a connection.
-            sock: The socket that is assiociated with the client connection.
-            id: The id of the connected node (at the other side of the TCP/IP connection).
-            host: The host/ip of the main node.
-            port: The port of the server of the main node."""
-
+        
         self.host = host
         self.port = port
         self.main_node = main_node
@@ -62,9 +33,7 @@ class NodeConnection(threading.Thread):
         super(NodeConnection, self).__init__()
 
     def compress(self, data, compression):
-        """Compresses the data given the type. It is used to provide compression to lower the network traffic in case of
-           large data chunks. It stores the compression type inside the data, so it can be easily retrieved."""
-
+        
         self.main_node.debug_print(self.id + ":compress:" + compression)
         self.main_node.debug_print(self.id + ":compress:input: " + str(data))
 
@@ -94,8 +63,7 @@ class NodeConnection(threading.Thread):
         return compressed
 
     def decompress(self, compressed):
-        """Decompresses the data given the type. It is used to provide compression to lower the network traffic in case of
-           large data chunks."""
+        
         self.main_node.debug_print(self.id + ":decompress:input: " + str(compressed))
         compressed = base64.b64decode(compressed)
         self.main_node.debug_print(self.id + ":decompress:b64decode: " + str(compressed))
@@ -117,12 +85,7 @@ class NodeConnection(threading.Thread):
         return compressed
 
     def send(self, data, encoding_type='utf-8', compression='none'):
-        """Send the data to the connected node. The data can be pure text (str), dict object (send as json) and bytes object.
-           When sending bytes object, it will be using standard socket communication. A end of transmission character 0x04 
-           utf-8/ascii will be used to decode the packets ate the other node. When the socket is corrupted the node connection
-           is closed. Compression can be enabled by using zlib, bzip2 or lzma. When enabled the data is compressed and send to
-           the client. This could reduce the network bandwith when sending large data chunks.
-           """
+        
         if isinstance(data, str):
             try:
                 if compression == 'none':
@@ -170,7 +133,7 @@ class NodeConnection(threading.Thread):
             self.main_node.debug_print('datatype used is not valid plese use str, dict (will be send as json) or bytes')
 
     def stop(self):
-        """Terminates the connection and the thread is stopped. Stop the node client. Please make sure you join the thread."""
+        """Terminates the connection and the thread is stopped. Stop the node client."""
         self.terminate_flag.set()
 
     def parse_packet(self, packet):
@@ -193,9 +156,6 @@ class NodeConnection(threading.Thread):
 
     # Required to implement the Thread. This is the main loop of the node client.
     def run(self):
-        """The main loop of the thread to handle the connection with the node. Within the
-           main loop the thread waits to receive data from the node. If data is received 
-           the method node_message will be invoked of the main node to be processed."""
         buffer = b''  # Hold the stream that comes in!
 
         while not self.terminate_flag.is_set():

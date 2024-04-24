@@ -17,7 +17,22 @@ After cloning the repository in your local machine, navigate to the correspondin
 This prompts you to select the type of node you want to run: full node, miner, or light node, simply follow the instructions on the terminal to choose your node.
 Once you've selected the type of node, your machine's IP address will be fetched automatically. Follow the instructions displayed in the console to interact with the node.
 
-## Features
+## Resilient Features
+
+In our peer-to-peer network, we leverage socket programming to establish direct communication channels between nodes. Socket programming allows us to create connections over a network, enabling data exchange between devices.
+
+With sockets, each node acts as both a client and a server, capable of initiating connections and accepting incoming connections. This bidirectional capability is essential for decentralized networks where all nodes have equal standing.
+
+By utilizing sockets, we tap into the underlying infrastructure of the internet, leveraging its robustness and scalability. This approach enables us to build a network that can span across different devices and platforms, facilitating seamless communication regardless of the underlying technology stack.
+
+In essence, socket programming serves as the backbone of our peer-to-peer network, enabling nodes to connect, communicate, and collaborate effectively in a decentralized manner.
+
+This is a completely decentralized, peer to peer network and offers the following additional functionalities :
+
+- Network Propogation and Broadcasting: Messages are efficiently broadcasted through the network without the need of establishing direct links between any two nodes.
+- Spam Protection : Ensures that a node doesn't broadcast the same message repeatedly thereby flooding the network unnecesarily.
+
+## Various Node Types
 
 ### Full Node
 
@@ -40,9 +55,3 @@ Once you've selected the type of node, your machine's IP address will be fetched
 - Lightweight Operation: Light nodes operate with reduced resource requirements compared to full nodes. They store the hash of the blocks but do not store the entire blockchain and can still participate in network activities.
 - Request Access: Similar to full nodes, light nodes can request access to the blockchain data from other nodes in the network.
 - Broadcast Transactions : You can perform actions such as requesting access to the blockchain, broadcasting transactions, connecting to other nodes, stopping the node, displaying the blockchain.
-
-This is a completely decentralized, peer to peer network and offers the following additional functionalities :
-
-- Network Propogation and Broadcasting: Messages are efficiently broadcasted through the network without the need of establishing direct links between any two nodes.
-- Spam Protection : Ensures that a node doesn't broadcast the same message repeatedly thereby flooding the network unnecesarily.
--
