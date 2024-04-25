@@ -30,26 +30,19 @@ class DSNode (Node):
         if (num & (1<<i)) == 0:
             num |= (1<<i)
         
-        print(num_sign)
         if self.start_time == -1:
             self.start_time = int(time.time())
             def start_give_results():
                 t = threading.Thread(target=self.give_results)
                 t.daemon = True
                 t.start()
-
             start_give_results()
-            print(messagebody)
         round_num =int( (int(time.time()) - self.start_time)/(self.round_time))
-        print(round_num)
         if num_sign == round_num+1:
             self.pool.add(messagebody)
-            print(messagebody)
             self.send_to_nodes(Message(messagebody, type, isBroadcast, num), exclude=[node])
         
     def give_results(self):
-        # current_time = int(time.time())-self.start_time
-        # if current_time >= (self.rounds)*(self.round_time):
         time.sleep((self.rounds)*(self.round_time))
         if len(self.pool) == 1:
             print("Message accepted: " + next(iter(self.pool)))
