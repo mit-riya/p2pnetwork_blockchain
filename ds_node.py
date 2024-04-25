@@ -8,7 +8,7 @@ class DSNode (Node):
     def __init__(self, host, port, n, delta, id=None, callback=None, max_connections=5):
         super(DSNode, self).__init__(host, port, id, callback, max_connections)
         self.pool = set()
-        self.rounds = n
+        self.rounds = 2
         self.round_time = delta
         self.current_time = -1
         print("\033[93mLight Node: Started\033[0m")
@@ -35,6 +35,7 @@ class DSNode (Node):
             print(messagebody)
         if num_sign == round_num :
             self.pool.add(messagebody)
+            print(messagebody)
             self.send_to_nodes(Message(messagebody, type, isBroadcast, num), exclude=[node])
         
     def start_protocol(self):
