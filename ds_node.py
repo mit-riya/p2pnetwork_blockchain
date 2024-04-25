@@ -23,7 +23,7 @@ class DSNode (Node):
         type = int(parts[1])
         isBroadcast = parts[2]
         message_id = parts[3]
-        num = parts[4]
+        num = int(parts[4])
         i = 1
         if (num & (1<<i)) == 0:
             num |= (1<<i)
@@ -42,6 +42,7 @@ class DSNode (Node):
         self.current_time = 0
         for current_round in range(self.rounds):
             self.current_time+=self.round_time
+            time.sleep(self.round_time)
         if len(self.pool) == 1:
             print(next(iter(self.pool)))
         else :
