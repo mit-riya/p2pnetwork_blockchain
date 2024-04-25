@@ -8,6 +8,7 @@ from Miner import Miner
 from Full_node import FullNode
 from Light_node import LightNode
 from constants import *
+from ds_node import DSNode
 
 def get_ip_address():
     try:
@@ -120,11 +121,40 @@ def light_node():
             node_1.display_chain()
     print('Left the blockchain')
 
-n = int(input("Enter 0 for full node, 1 for miner, 2 for light node\n"))
+def ds_node():
+    ip = get_ip_address()
+    print("\033[93m" + f"Your ip is {ip}\n" + "\033[0m")
+    node_1 = LightNode(ip, 8001)
+    node_1.start()
+
+    while(True):
+        print("\033[93m\nPress 1 to request access to the blockchain\033[0m")
+        print("\033[93mPress 2 to broadcast a transaction\033[0m")
+        print("\033[93mPress 3 to connect to a node\033[0m")
+        print("\033[93mPress 4 to stop the node\033[0m")
+        print("\033[93mPress 5 to display the chain\n\033[0m")
+        
+        choice = int(input())
+        
+        if choice == 1:
+            node_1.send_to_nodes(Message("Request access to the blockchain", ACCESS ,  False, 0))
+        elif choice == 2:
+            node_1.send_to_nodes(Message(Transaction(), TRANSACTION , True, 0))
+        elif choice == 3:
+            ip = input("\033[93mEnter the IP address of the node you want to connect to\n\033[0m")
+            node_1.connect_with_node(ip , 8001)
+        elif choice == 4:
+            node_1.stop()
+            break
+    print('Left the blockchain')
+
+n = int(input("Enter 0 for full node, 1 for miner, 2 for light node, 3 for ds node\n"))
 if n==0:
     full_node()
 elif n==1:
     miner()
 elif n==2:
     light_node()
+elif n==3:
+    ds_node()
     
