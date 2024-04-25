@@ -38,9 +38,9 @@ def full_node():
         choice = int(input())
         
         if choice == 1:
-            node_1.send_to_nodes(Message("Request access to the blockchain", ACCESS , False))
+            node_1.send_to_nodes(Message("Request access to the blockchain", ACCESS , False, 0))
         elif choice == 2:
-            node_1.send_to_nodes(Message(Transaction(), TRANSACTION , True))
+            node_1.send_to_nodes(Message(Transaction(), TRANSACTION , True, 0))
         elif choice == 3:
             ip = input("\033[94mEnter the IP address of the node you want to connect to\n\033[0m")
             node_1.connect_with_node(ip , 8001)
@@ -68,11 +68,11 @@ def miner():
         choice = int(input())
         
         if choice == 1:
-            node_1.send_to_nodes(Message("Request access to the blockchain", ACCESS , False))
+            node_1.send_to_nodes(Message("Request access to the blockchain", ACCESS , False, 0))
         elif choice == 2:
             t1 = Transaction()
             node_1.add_to_transaction_pool(t1)
-            node_1.send_to_nodes(Message(t1, TRANSACTION , True))
+            node_1.send_to_nodes(Message(t1, TRANSACTION , True, 0))
         elif choice == 3:
             ip = input("\033[92mEnter the IP address of the node you want to connect to\n\033[0m")
             node_1.connect_with_node(ip , 8001)
@@ -84,7 +84,7 @@ def miner():
         elif choice == 6:
             block_number = int(input("\033[92mEnter the block number\n\033[0m"))
             node_1.add_block(Block(block_number))
-            node_1.send_to_nodes(Message(Block(block_number), BLOCK , True))
+            node_1.send_to_nodes(Message(Block(block_number), BLOCK , True, 0))
         elif choice == 7:
             node_1.print_transaction_pool()
     print('Left the blockchain')
@@ -107,9 +107,9 @@ def light_node():
         choice = int(input())
         
         if choice == 1:
-            node_1.send_to_nodes(Message("Request access to the blockchain", ACCESS ,  False))
+            node_1.send_to_nodes(Message("Request access to the blockchain", ACCESS ,  False, 0))
         elif choice == 2:
-            node_1.send_to_nodes(Message(Transaction(), TRANSACTION , True))
+            node_1.send_to_nodes(Message(Transaction(), TRANSACTION , True, 0))
         elif choice == 3:
             ip = input("\033[93mEnter the IP address of the node you want to connect to\n\033[0m")
             node_1.connect_with_node(ip , 8001)
