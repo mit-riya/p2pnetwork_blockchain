@@ -124,7 +124,7 @@ def light_node():
 def ds_node():
     ip = get_ip_address()
     print("\033[93m" + f"Your ip is {ip}\n" + "\033[0m")
-    node_1 = DSNode(ip, 8001)
+    node_1 = DSNode(ip, 8001, 2, 2)
     node_1.start()
 
     while(True):
