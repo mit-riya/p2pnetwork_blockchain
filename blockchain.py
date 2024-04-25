@@ -1,6 +1,7 @@
 import sys
 import time
 import socket
+import threading
 sys.path.insert(0, '..') # Import the files where the modules are located
 
 
@@ -139,7 +140,7 @@ def ds_node():
         if choice == 1:
             node_1.send_to_nodes(Message("Request access to the blockchain", ACCESS ,  False, 0))
         elif choice == 2:
-            node_1.send_to_nodes(Message(Transaction(), TRANSACTION , True, 0))
+            node_1.give_results()
         elif choice == 3:
             ip = input("\033[93mEnter the IP address of the node you want to connect to\n\033[0m")
             node_1.connect_with_node(ip , 8001)

@@ -1,6 +1,7 @@
 from node_final import Node
 from constants import *
 import hashlib
+import threading
 
 class DSNode (Node):
 
@@ -10,8 +11,8 @@ class DSNode (Node):
         self.pool = set()
         self.rounds = 2
         self.round_time = delta
-        self.current_time = -1
-        print("\033[93mLight Node: Started\033[0m")
+        self.start_time = -1
+        print("\033[93mDS Node: Started\033[0m")
 
 
     def node_message(self, node, data):
@@ -25,29 +26,35 @@ class DSNode (Node):
         message_id = parts[3]
         num = int(parts[4])
         i = 1
+        num_sign = bin(num).count('1')
         if (num & (1<<i)) == 0:
             num |= (1<<i)
-        num_sign = bin(num).count('1')
-        round_num = (self.current_time)/(self.round_time)
+        
+        print(num_sign)
+        if self.start_time == -1:
+            self.start_time = int(time.time())
+            def start_give_results():
+                t = threading.Thread(target=self.give_results)
+                t.daemon = True
+                t.start()
 
-        if self.current_time == -1:
-            self.start_protocol()
+            start_give_results()
             print(messagebody)
-        if num_sign == round_num :
+        round_num =int( (int(time.time()) - self.start_time)/(self.round_time))
+        print(round_num)
+        if num_sign == round_num+1:
             self.pool.add(messagebody)
             print(messagebody)
             self.send_to_nodes(Message(messagebody, type, isBroadcast, num), exclude=[node])
         
-    def start_protocol(self):
-        self.current_time = 0
-        for current_round in range(self.rounds):
-            self.current_time+=self.round_time
-            time.sleep(self.round_time)
+    def give_results(self):
+        # current_time = int(time.time())-self.start_time
+        # if current_time >= (self.rounds)*(self.round_time):
+        time.sleep((self.rounds)*(self.round_time))
         if len(self.pool) == 1:
-            print(next(iter(self.pool)))
+            print("Message accepted: " + next(iter(self.pool)))
         else :
             print("no message")
-            # self.send_to_nodes(Message(next(iter(self.pool),5,False,0)))
         
     def outbound_node_connected(self, node):
         print("\033[93moutbound_node_connected {}: {}\033[0m".format(node.host, node.port))
