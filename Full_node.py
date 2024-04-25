@@ -67,7 +67,7 @@ class FullNode (Node):
             print(messagebody)
             print("\n")
         elif int(type) == ACCESS:
-            self.send_to_node(node, Message(self.get_chain_string(), BLOCKCHAIN , False))
+            self.send_to_node(node, Message(self.get_chain_string(), BLOCKCHAIN , False, 0))
             print("Blockchain sent to node : " + node.host + " : " + str(node.port))
             print("\n")
 
