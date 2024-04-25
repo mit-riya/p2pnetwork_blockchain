@@ -8,15 +8,6 @@ This project provides a framework for creating a decentralized P2P network where
 - Miner: Node responsible for creating new blocks through the mining process and maintaining a transaction pool.
 - Light Node: Lightweight node that stores the hash of each block instead of the entire blockchain and can interact with the network for specific tasks like broadcasting its own transactions and requesting access to the complete blockchain from the full nodes.
 
-## How to Run
-
-After cloning the repository in your local machine, navigate to the corresponding directory and run the following command :
-
-- python blockchain.py
-
-This prompts you to select the type of node you want to run: full node, miner, or light node, simply follow the instructions on the terminal to choose your node.
-Once you've selected the type of node, your machine's IP address will be fetched automatically. Follow the instructions displayed in the console to interact with the node.
-
 ## Resilient Features
 
 In our peer-to-peer network, we leverage socket programming to establish direct communication channels between nodes. Socket programming allows us to create connections over a network, enabling data exchange between devices.
@@ -31,6 +22,14 @@ This is a completely decentralized, peer to peer network and offers the followin
 
 - Network Propogation and Broadcasting: Messages are efficiently broadcasted through the network without the need of establishing direct links between any two nodes.
 - Spam Protection : Ensures that a node doesn't broadcast the same message repeatedly thereby flooding the network unnecesarily.
+
+## Dolev-Strong Protocol Implementation
+
+Our network module is fortified with the robust **Dolev-Strong** protocol, ensuring seamless consensus among interconnected nodes within the peer-to-peer network. Spearheaded by the miner, this protocol orchestrates the dissemination of blocks while achieving unanimity among the network nodes.
+
+The implementation employs a **bitmasking** technique to track the status of signatures associated with each message. In this approach, each node is authorized to set its corresponding bit to 1 upon integrating a message into its pool. Subsequently, the node appends its signature to the message and propagates the message across the network.
+
+Following a series of k rounds, if a solitary block emerges within the message pool of a node, it is deemed as the accepted block, signaling successful consensus attainment.
 
 ## Various Node Types
 
@@ -55,3 +54,12 @@ This is a completely decentralized, peer to peer network and offers the followin
 - Lightweight Operation: Light nodes operate with reduced resource requirements compared to full nodes. They store the hash of the blocks but do not store the entire blockchain and can still participate in network activities.
 - Request Access: Similar to full nodes, light nodes can request access to the blockchain data from other nodes in the network.
 - Broadcast Transactions : You can perform actions such as requesting access to the blockchain, broadcasting transactions, connecting to other nodes, stopping the node, displaying the blockchain.
+
+## How to Run
+
+After cloning the repository in your local machine, navigate to the corresponding directory and run the following command :
+
+- python blockchain.py
+
+This prompts you to select the type of node you want to run: full node, miner, or light node, simply follow the instructions on the terminal to choose your node.
+Once you've selected the type of node, your machine's IP address will be fetched automatically. Follow the instructions displayed in the console to interact with the node.
