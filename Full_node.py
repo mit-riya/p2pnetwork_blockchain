@@ -49,6 +49,7 @@ class FullNode (Node):
         type = parts[1]
         isBroadcast = parts[2]
         message_id = int(parts[3])
+        num_sign = int(parts[4])
 
         # print("Message Structure starts")
         # print(messagebody)
