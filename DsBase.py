@@ -4,8 +4,8 @@ from constants import *
 class DsBase (Node):
 
     # Python class constructor
-    def __init__(self, host, port, id=None , messageTosend = "" , callback=None, max_connections=5):
-        super(DsBase, self).__init__(host, port, id, callback, max_connections)
+    def _init_(self, host, port, id=None , messageTosend = "" , callback=None, max_connections=5):
+        super(DsBase, self)._init_(host, port, id, callback, max_connections)
         print("\033[92mBase: Started\033[0m")
         self.messageTosend = messageTosend
         
@@ -22,5 +22,4 @@ class DsBase (Node):
         print(f"\033[92moutbound_node_disconnected : {node.host}:{node.port} \033[0m")
         
     def start_the_protocol(self):
-        self.send_to_nodes(Message(self.messageTosend, INFO , False, 1))
-        
+        self.send_to_nodes(Message("Block #1", INFO , False, 1))

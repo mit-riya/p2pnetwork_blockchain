@@ -30,4 +30,3 @@ print("\033[92m\nPress 1 to start the protocol\033[0m")
 choice = int(input())
 if choice == 1:
     node_1.start_the_protocol()
-    
