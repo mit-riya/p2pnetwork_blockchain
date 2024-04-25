@@ -43,6 +43,8 @@ class DSNode (Node):
             self.current_time+=self.round_time
         if len(self.pool) == 1:
             print(next(iter(self.pool)))
+        else :
+            print("no message")
             # self.send_to_nodes(Message(next(iter(self.pool),5,False,0)))
         
     def outbound_node_connected(self, node):
