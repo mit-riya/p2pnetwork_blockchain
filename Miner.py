@@ -96,7 +96,7 @@ class Miner (Node):
             print(messagebody)
             print("\n")
         elif int(type) == ACCESS:
-            self.send_to_node(node ,Message("I am not a full node", INFO , False))
+            self.send_to_node(node ,Message("I am not a full node", INFO , False, 0))
         elif int(type) == INFO:
             print("\033[93mMessage received from " + node.host + ":" + str(node.port) + "\033[0m")
             print(messagebody)
