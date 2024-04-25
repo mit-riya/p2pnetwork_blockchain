@@ -32,6 +32,7 @@ class DSNode (Node):
 
         if self.current_time == -1:
             self.start_protocol()
+            print(messagebody)
         if num_sign == round_num :
             self.pool.add(messagebody)
             self.send_to_nodes(Message(messagebody, type, isBroadcast, num), exclude=[node])

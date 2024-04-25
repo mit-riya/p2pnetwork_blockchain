@@ -43,13 +43,13 @@ class LightNode (Node):
             self.display_chain()
         elif type == BLOCK:
             self.receive_data(messagebody,type)
-            print("\033[93mBlock received from " + node.host + ":" + node.port + "\033[0m")
+            print("\033[93mBlock received from " + node.host + ":" + str(node.port) + "\033[0m")
             print(messagebody)
             print("\n")
         elif type == ACCESS:
             self.send_to_node(node ,Message("I am not a full node", INFO , False))
         elif type == INFO:
-            print("\033[93mMessage received from " + node.host + ":" + node.port + "\033[0m")
+            print("\033[93mMessage received from " + node.host + ":" + str(node.port) + "\033[0m")
             print(messagebody)
             print("\n")
 
