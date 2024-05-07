@@ -59,7 +59,7 @@ Following a series of k rounds, if a solitary block emerges within the message p
 
 After cloning the repository in your local machine, navigate to the corresponding directory and run the following command :
 
-- python blockchain.py
+    python blockchain.py
 
 This prompts you to select the type of node you want to run: full node, miner, or light node, simply follow the instructions on the terminal to choose your node.
 Once you've selected the type of node, your machine's IP address will be fetched automatically. Follow the instructions displayed in the console to interact with the node.
